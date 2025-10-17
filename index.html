@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>進制轉換器（10, 2, 16）含列式</title>
+<title>進制轉換器</title>
 <style>
 body{
   font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;
@@ -33,7 +33,7 @@ h2{color:#004a7f;margin-top:30px;}
 </head>
 <body>
 
-<h1>🔢 進制轉換器（10 ↔ 2 ↔ 16）</h1>
+<h1>🔢 進制轉換器）</h1>
 
 <p>輸入任一數字（十進、二進、十六進皆可），系統會自動轉換成其他兩進制並顯示「列式過程」。</p>
 
@@ -136,7 +136,7 @@ ${toHexSteps(decVal)}
     else if(type==="bin"){
       let s=binInput.value.trim();
       if(!/^[01]+$/i.test(s)){alert("請輸入正確二進制數字，僅含0與1");return;}
-      decVal=parseInt(s，2);
+      decVal=parseInt(s,2);
       hexVal=decVal.toString(16).toUpperCase();
       decInput.value=decVal;
       hexInput.value=hexVal;
@@ -157,12 +157,12 @@ ${toHexSteps(decVal)}
     else if(type==="hex"){
       let s=hexInput.value.trim();
       if(!/^[0-9a-fA-F]+$/.test(s)){alert("請輸入正確十六進制數字（0–9, A–F）");return;}
-      decVal=parseInt(s，16);
+      decVal=parseInt(s,16);
       binVal=decVal.toString(2);
       decInput.value=decVal;
       binInput.value=binVal;
 
-      log=`🧮 從十六進制 ${s。toUpperCase()} 轉換：
+      log=`🧮 從十六進制 ${s.toUpperCase()} 轉換：
 -----------------------------------
 [十六進 → 十進]
 ${hexToDecimalSteps(s)}
@@ -177,7 +177,7 @@ ${toBinarySteps(decVal)}
     }
 
     // 更新輸出欄
-    if(type==="dec"){binInput。value=binVal;hexInput.value=hexVal;}
+    if(type==="dec"){binInput.value=binVal;hexInput.value=hexVal;}
     steps.textContent=log;
 
   }catch(e){
