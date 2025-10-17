@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>進制轉換器（10, 2, 16）含列式</title>
+<style>
+body{
+  font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;
+  background:#f7f9fc;color:#222;
+  max-width:900px;margin:auto;padding:20px;
+  line-height:1.6;
+}
+h1{color:#004a7f;text-align:center;}
+fieldset{
+  border:2px solid #004a7f;border-radius:8px;padding:15px;margin-bottom:20px;background:#fff;
+}
+label{display:block;margin:10px 0 6px;font-weight:bold;}
+input{
+  width:100%;padding:8px;font-size:16px;border:1px solid #ccc;border-radius:4px;
+}
+button{
+  margin-top:10px;background:#004a7f;color:#fff;
+  border:none;padding:10px 18px;border-radius:6px;cursor:pointer;
+}
+button:hover{background:#0074d9;}
+.output{background:#fff;border:1px solid #ccc;border-radius:6px;padding:10px;margin-top:15px;white-space:pre-wrap;}
+h2{color:#004a7f;margin-top:30px;}
+@media(max-width:600px){
+  input{font-size:15px;}
+}
+</style>
+</head>
+<body>
+
+<h1>🔢 進制轉換器（10 ↔ 2 ↔ 16）</h1>
+
+<p>輸入任一數字（十進、二進、十六進皆可），系統會自動轉換成其他兩進制並顯示「列式過程」。</p>
+
+<fieldset>
+  <label for="dec">十進制 (Base 10)：</label>
+  <input id="dec" type="text" placeholder="例如：45">
+  
+  <label for="bin">二進制 (Base 2)：</label>
+  <input id="bin" type="text" placeholder="例如：101101">
+  
+  <label for="hex">十六進制 (Base 16)：</label>
+  <input id="hex" type="text" placeholder="例如：2D">
+
+  <button onclick="convertFrom('dec')">從十進制轉換</button>
+  <button onclick="convertFrom('bin')">從二進制轉換</button>
+  <button onclick="convertFrom('hex')">從十六進制轉換</button>
+</fieldset>
+
+<div class="output" id="steps"></div>
+
+<script>
+function convertFrom(type){
+  const decInput=document.getElementById("dec");
+  const binInput=document.getElementById("bin");
+  const hexInput=document.getElementById("hex");
+  const steps=document.getElementById("steps");
+  let decVal,binVal,hexVal,log="";
+
+  function toBinarySteps(n){
+    if(n===0) return "0\n(0 ÷ 2 = 0)";
+    let quotient=n,remainder,bits=[],lines=[];
+    while(quotient>0){
+      remainder=quotient%2;
+      lines.push(`${quotient} ÷ 2 = ${Math.floor(quotient/2)} ... ${remainder}`);
+      bits.unshift(remainder);
+      quotient=Math.floor(quotient/2);
+    }
+    return lines.join("\n") + `\n➡️ 二進制 = ${bits.join("")}`;
+  }
+
+  function toHexSteps(n){
+    if(n===0) return "0\n(0 ÷ 16 = 0)";
+    const map="0123456789ABCDEF";
+    let q=n,r,hex=[],lines=[];
+    while(q>0){
+      r=q%16;
+      lines.push(`${q} ÷ 16 = ${Math.floor(q/16)} ... ${map[r]}`);
+      hex.unshift(map[r]);
+      q=Math.floor(q/16);
+    }
+    return lines.join("\n") + `\n➡️ 十六進制 = ${hex.join("")}`;
+  }
+
+  function binaryToDecimalSteps(s){
+    const bits=s.split("").reverse();
+    let sum=0,lines=[];
+    bits.forEach((b,i)=>{
+      const val=Number(b)*(2**i);
+      sum+=val;
+      lines.push(`位 ${i}：${b} × 2^${i} = ${val}`);
+    });
+    lines.push(`➡️ 十進制 = ${sum}`);
+    return lines.join("\n");
+  }
+
+  function hexToDecimalSteps(s){
+    s=s.toUpperCase();
+    const map="0123456789ABCDEF";
+    const chars=s.split("").reverse();
+    let sum=0,lines=[];
+    chars.forEach((c,i)=>{
+      const val=map.indexOf(c)* (16**i);
+      sum+=val;
+      lines.push(`位 ${i}：${c} × 16^${i} = ${val}`);
+    });
+    lines.push(`➡️ 十進制 = ${sum}`);
+    return lines.join("\n");
+  }
+
+  try{
+    if(type==="dec"){
+      decVal=parseInt(decInput.value);
+      if(isNaN(decVal)){alert("請輸入正確十進制數字");return;}
+      binVal=decVal.toString(2);
+      hexVal=decVal.toString(16).toUpperCase();
+
+      log=`🧮 從十進制 ${decVal} 轉換：
+-----------------------------------
+[十進 → 二進]
+${toBinarySteps(decVal)}
+
+-----------------------------------
+[十進 → 十六進]
+${toHexSteps(decVal)}
+
+結果：
+二進制 = ${binVal}
+十六進制 = ${hexVal}`;
+    }
+    else if(type==="bin"){
+      let s=binInput.value.trim();
+      if(!/^[01]+$/i.test(s)){alert("請輸入正確二進制數字，僅含0與1");return;}
+      decVal=parseInt(s，2);
+      hexVal=decVal.toString(16).toUpperCase();
+      decInput.value=decVal;
+      hexInput.value=hexVal;
+
+      log=`🧮 從二進制 ${s} 轉換：
+-----------------------------------
+[二進 → 十進]
+${binaryToDecimalSteps(s)}
+
+-----------------------------------
+[十進 → 十六進]
+${toHexSteps(decVal)}
+
+結果：
+十進制 = ${decVal}
+十六進制 = ${hexVal}`;
+    }
+    else if(type==="hex"){
+      let s=hexInput.value.trim();
+      if(!/^[0-9a-fA-F]+$/.test(s)){alert("請輸入正確十六進制數字（0–9, A–F）");return;}
+      decVal=parseInt(s，16);
+      binVal=decVal.toString(2);
+      decInput.value=decVal;
+      binInput.value=binVal;
+
+      log=`🧮 從十六進制 ${s。toUpperCase()} 轉換：
+-----------------------------------
+[十六進 → 十進]
+${hexToDecimalSteps(s)}
+
+-----------------------------------
+[十進 → 二進]
+${toBinarySteps(decVal)}
+
+結果：
+十進制 = ${decVal}
+二進制 = ${binVal}`;
+    }
+
+    // 更新輸出欄
+    if(type==="dec"){binInput。value=binVal;hexInput.value=hexVal;}
+    steps.textContent=log;
+
+  }catch(e){
+    alert("發生錯誤：" + e);
+  }
+}
+</script>
+
+</body>
+</html>
