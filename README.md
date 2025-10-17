@@ -61,7 +61,7 @@
 
 | 教具 | 說明 |
 |:--|:--|
-| [🔗 flipandadd1](https://lct1995chaewon.github.io/flipandadd1) | 八位元二補碼互動教具（取反 + 加 1） |
+| [🔗 8bit-binary-complement]([https://lct1995chaewon.github.io/flipandadd1](https://lct1995chaewon.github.io/8bit-binary-complement/)) | 八位元二補碼互動教具（取反 + 加 1） |
 | 📄 八位元二補碼工作紙 | 搭配 flipandadd1 練習二補碼原理 |
 
 ---
