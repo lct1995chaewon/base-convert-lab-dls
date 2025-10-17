@@ -43,6 +43,48 @@
 
 ---
 
-## 🧮 列式範例
+---
 
-**十進 → 二進**
+## 🧰 技術資訊
+
+| 分類 | 技術 |
+|:--|:--|
+| 前端 | HTML 5 / CSS 3 / Vanilla JavaScript |
+| 響應式 | CSS Media Query |
+| 相容性 | Chrome、Edge、Firefox、Safari |
+
+---
+
+## 🧠 延伸與關聯
+
+可搭配以下教具與教材使用，形成完整的「數字系統與邏輯」系列學習：
+
+| 教具 | 說明 |
+|:--|:--|
+| [🔗 flipandadd1](https://lct1995chaewon.github.io/flipandadd1) | 八位元二補碼互動教具（取反 + 加 1） |
+| 📄 八位元二補碼工作紙 | 搭配 flipandadd1 練習二補碼原理 |
+
+---
+
+## 📝 授權 License  
+
+本專案採用 [MIT License](https://opensource.org/licenses/MIT)。  
+可自由使用、修改、再散佈，惟需保留作者署名。
+
+---
+
+## 💬 English Summary
+
+**Base Convert Lab DLS** is an interactive, browser‑based educational tool designed  
+for converting numbers among **Decimal (10)**, **Binary (2)**, and **Hexadecimal (16)** systems.  
+It also provides step‑by‑step explanations for each conversion.
+
+**Highlights**
+- Interactive input/output  
+- Shows full calculation process  
+- Pure Front‑End (HTML + CSS + JavaScript)  
+- Ideal for classroom use in *Digital Logic System* lessons  
+
+---
+
+👩‍💻 **Maintainer:** [lct1995chaewon](https://github.com/lct1995chaewon)
